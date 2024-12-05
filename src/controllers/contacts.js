@@ -39,6 +39,7 @@ export const updateContact = async (req, res) => {
           { new: true, runValidators: true }
       );
 
+      
       if (!contact) {
           return res.status(404).json({ msg: 'Contacto no encontrado' });
       }
