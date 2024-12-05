@@ -84,7 +84,7 @@ export const deleteUser = async (req, res) => {
         return res.status(404).json( { success: false, message: "Contraseña incorrecta"});
       }
   
-      const token = generateToken(checkIs.gmail);
+      const token = generateToken(checkIs.gmailUser);
 
       return res.status(200).json({ usuario: checkIs, token});
     } catch (error) {
