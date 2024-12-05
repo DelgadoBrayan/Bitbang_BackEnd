@@ -13,11 +13,12 @@ export const createUser = async (req, res) => {
       }
     const product = await User.create({
       nameUser: req.body.nameUser,
-      password: req.body.password,
-      gmail: req.body.gmail
+      gmailUser: req.body.gmailUser,
+      password: req.body.password
     });
     return res.status(201).json({ product, msg: 'Usuario creado correctamente' });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: 'Error al crear el usuario' });
   }
 };
@@ -71,19 +72,20 @@ export const deleteUser = async (req, res) => {
 
   export const loginUsuario = async (req, res) => {
     try {
-      const checkIs = await User.findOne(req.body.gmail);
+      const checkIs = await User.findOne({gmailUser: req.body.gmailUser });
       if (!checkIs) {
         return { success: false, message: "Correo electrónico no registrado" };
       }
   
-      const contrasenaHash = checkIs.contrasena;
-      const esCorrecto = await verified(contrasena, contrasenaHash);
+      const contrasenaHash = checkIs.password;
+      const esCorrecto = await verified(req.body.password, contrasenaHash);
   
       if (!esCorrecto) {
         return res.status(404).json( { success: false, message: "Contraseña incorrecta"});
       }
   
       const token = generateToken(checkIs.gmail);
+
       return res.status(200).json({ usuario: checkIs, token});
     } catch (error) {
       console.error("Error en el inicio de sesion:", error);

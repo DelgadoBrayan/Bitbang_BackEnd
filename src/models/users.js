@@ -6,19 +6,18 @@ const userShema = mongoose.Schema(
         type:String,
         trim: true,
         require:true
-    }, 
+    } ,
+gmailUser:{
+    type:String,
+    trim:true,
+    require:true
+}  , 
     password:{
-        type:Number,
+        type:String,
         trim: true,
         require:true
-    },
-    gmailUser:{
-        type:String,
-        trim:true,
-        require:true
-    }   
           
-    }, {timestamps:true}  
+    }},{timestamps:true}  
 )
 
 
