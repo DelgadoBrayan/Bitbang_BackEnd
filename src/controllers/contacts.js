@@ -27,20 +27,23 @@ export const getContact = async (req, res) => {
 // Patch product ById
 export const updateContact = async (req, res) => {
   const { id } = req.params;
-  const { nameProduct } = req.body; 
+  const data= req.body; 
 
   try {
-      const product = await Contact.findByIdAndUpdate(
+      const contact = await Contact.findByIdAndUpdate(
           id,
-          { nameProduct },
+          { name: data.name,
+            number: data.number,
+            gmail: data.gmail
+           },
           { new: true, runValidators: true }
       );
 
-      if (!product) {
+      if (!contact) {
           return res.status(404).json({ msg: 'Contacto no encontrado' });
       }
 
-      return res.status(200).json({ msg: 'Contacto actualizado correctamente', product });
+      return res.status(200).json({ msg: 'Contacto actualizado correctamente', contact });
   } catch (error) {
       return res.status(500).json({ error: error.message });
   }
